@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg"
+    android:layout_gravity="center"
+    android:elevation="@dimen/_20sdp"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/failure"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/failure"
+        app:lottie_loop="true"
+        />
+
+    <TextView
+        android:id="@+id/no_item_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is not a PDF!!"
+        android:layout_below="@id/failure"
+        android:textAlignment="center"
+        style="@style/BodyTextStyle"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:padding="@dimen/_10sdp"
+        android:textColor="@color/grey_90" />
+</RelativeLayout>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PDFier</string>
+    <string name="selected_pdfs_would_appear_here">Selected PDFs would appear here</string>
+    <string name="pdfs_history_would_appear_here">PDFs history would appear here</string>
+</resources>

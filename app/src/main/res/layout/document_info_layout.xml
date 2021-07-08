@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:visibility="gone"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/doc_info_label"
+        style="@style/TitleTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:padding="@dimen/_10sdp"
+        android:text="Document MetaData"
+        android:textColor="@color/grey_90"
+        />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Title: "
+        style="@style/BodyTextStyle"
+        android:padding="@dimen/_10sdp"
+        android:textColor="@color/grey_90"
+        android:layout_below="@id/doc_info_label"
+        />
+
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Author: "
+        style="@style/BodyTextStyle"
+        android:padding="@dimen/_10sdp"
+        android:textColor="@color/grey_90"
+        android:layout_below="@id/title"
+        />
+
+    <TextView
+        android:id="@+id/subject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Subject: "
+        style="@style/BodyTextStyle"
+        android:padding="@dimen/_10sdp"
+        android:textColor="@color/grey_90"
+        android:layout_below="@id/author"
+        />
+
+    <TextView
+        android:id="@+id/keywords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Keywords: "
+        style="@style/BodyTextStyle"
+        android:padding="@dimen/_10sdp"
+        android:textColor="@color/grey_90"
+        android:layout_below="@id/subject"
+        />
+
+    <TextView
+        android:id="@+id/creator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Creator: "
+        style="@style/BodyTextStyle"
+        android:padding="@dimen/_10sdp"
+        android:textColor="@color/grey_90"
+        android:layout_below="@id/keywords"
+        />
+
+    <TextView
+        android:id="@+id/producer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Producer: "
+        style="@style/BodyTextStyle"
+        android:padding="@dimen/_10sdp"
+        android:textColor="@color/grey_90"
+        android:layout_below="@id/creator"
+        />
+
+    <TextView
+        android:id="@+id/creation_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Creation Date: "
+        style="@style/BodyTextStyle"
+        android:padding="@dimen/_10sdp"
+        android:textColor="@color/grey_90"
+        android:layout_below="@id/producer"
+        />
+
+    <TextView
+        android:id="@+id/mod_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Mod Date: "
+        style="@style/BodyTextStyle"
+        android:padding="@dimen/_10sdp"
+        android:textColor="@color/grey_90"
+        android:layout_below="@id/creation_date"
+        />
+
+    <TextView
+        android:id="@+id/doc_page_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:text="Page Count: "
+        style="@style/BodyTextStyle"
+        android:padding="@dimen/_10sdp"
+        android:textColor="@color/grey_90"
+        android:layout_below="@id/mod_date"
+        />
+
+</RelativeLayout>
