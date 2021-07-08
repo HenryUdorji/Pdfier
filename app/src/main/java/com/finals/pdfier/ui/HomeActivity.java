@@ -30,6 +30,8 @@ import com.shockwave.pdfium.PdfDocument;
 import com.shockwave.pdfium.PdfiumCore;
 
 import java.io.IOException;
+import java.time.ZonedDateTime;
+import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
@@ -59,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
                         boolean isUriPdf = uri.getEncodedPath().endsWith(".pdf");
                         if (isUriPdf) {
                             binding.scrollView.setVisibility(View.VISIBLE);
+                            binding.documentInfoInclude.getRoot().setVisibility(View.GONE);
                             binding.noItemInclude.getRoot().setVisibility(View.GONE);
                             createBitmapFromPdf(uri);
                         }else {
@@ -78,6 +81,7 @@ public class HomeActivity extends AppCompatActivity {
                 if (!isClosed && pdfDocument != null && pdfiumCore != null) {
                     pdfiumCore.closeDocument(pdfDocument); // important!
                 }
+
                 isClosed = true;
                 getPdfLauncher.launch(new String[]{"application/*"});
             }
@@ -157,7 +161,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private void setupPdfMetaData(PdfiumCore pdfiumCore, PdfDocument pdfDocument) {
         PdfDocument.Meta meta = pdfiumCore.getDocumentMeta(pdfDocument);
-        binding.pdfTitle.setText(meta.getTitle());
 
         int pageCount = pdfiumCore.getPageCount(pdfDocument);
 
@@ -192,6 +195,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
     }
+
 
     private void setupBottomNavigation() {
         BottomNavigationUtils.enableBottomNavigation(this, binding.navigation);

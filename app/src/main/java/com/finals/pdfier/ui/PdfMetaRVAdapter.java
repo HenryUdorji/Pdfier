@@ -16,7 +16,7 @@ import com.finals.pdfier.utils.BitmapUtils;
 import java.util.List;
 
 public class PdfMetaRVAdapter extends RecyclerView.Adapter<PdfMetaRVAdapter.PdfViewHolder> {
-    private List<PdfMeta> pdfMetas;
+    private final List<PdfMeta> pdfMetas;
 
     public PdfMetaRVAdapter(List<PdfMeta> pdfMetas) {
         this.pdfMetas = pdfMetas;
@@ -50,7 +50,7 @@ public class PdfMetaRVAdapter extends RecyclerView.Adapter<PdfMetaRVAdapter.PdfV
     }
 
     static class PdfViewHolder extends RecyclerView.ViewHolder {
-        private ItemPdfMetaCardBinding binding;
+        private final ItemPdfMetaCardBinding binding;
 
         public PdfViewHolder(@NonNull ItemPdfMetaCardBinding binding) {
             super(binding.getRoot());

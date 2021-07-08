@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.finals.pdfier.R;
 import com.finals.pdfier.data.local.SqlConnector;
@@ -19,6 +21,7 @@ import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
 
+    private static final String TAG = "ListActivity";
     private static final int ACTIVITY_NUM = 2;
     private ActivityListBinding binding;
 
@@ -28,27 +31,29 @@ public class ListActivity extends AppCompatActivity {
         binding = ActivityListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        List<PdfMeta> pdfMetas = new ArrayList<>();
+        List<PdfMeta> pdfMetas;
         try {
             pdfMetas = SqlConnector.getInstance(this).getAllPdfMeta();
+            setupRV(pdfMetas);
         }catch (Exception e) {
             Snackbar.make(binding.getRoot(), e.getMessage(), Snackbar.LENGTH_LONG).show();
         }
 
         binding.noItemInclude.noItemMsg.setText(getString(R.string.pdfs_history_would_appear_here));
         setupBottomNavigation();
-        setupRV(pdfMetas);
     }
 
     private void setupRV(List<PdfMeta> pdfMetas) {
         if (pdfMetas.size() != 0) {
+            binding.noItemInclude.getRoot().setVisibility(View.GONE);
 
-            binding.recyclerview.setHasFixedSize(true);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this,
-                    LinearLayoutManager.VERTICAL, false);
-            binding.recyclerview.setLayoutManager(layoutManager);
             PdfMetaRVAdapter pdfMetaRVAdapter = new PdfMetaRVAdapter(pdfMetas);
+            binding.recyclerview.setHasFixedSize(true);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            binding.recyclerview.setLayoutManager(layoutManager);
             binding.recyclerview.setAdapter(pdfMetaRVAdapter);
+        }else {
+            binding.noItemInclude.getRoot().setVisibility(View.VISIBLE);
         }
     }
 
