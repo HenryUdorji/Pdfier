@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.finals.pdfier.R;
 import com.finals.pdfier.ui.HomeActivity;
@@ -23,11 +24,13 @@ public class BottomNavigationUtils {
             if (id == R.id.home) {
                 Intent intent = new Intent(context, HomeActivity.class);
                 context.startActivity(intent);
+                ((AppCompatActivity)context).finish();
                 return true;
             }
             else if (id == R.id.list) {
                 Intent intent = new Intent(context, ListActivity.class);
                 context.startActivity(intent);
+                ((AppCompatActivity)context).finish();
                 return true;
             }
             return false;

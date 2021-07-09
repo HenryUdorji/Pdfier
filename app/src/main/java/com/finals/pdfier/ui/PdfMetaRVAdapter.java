@@ -37,7 +37,7 @@ public class PdfMetaRVAdapter extends RecyclerView.Adapter<PdfMetaRVAdapter.PdfV
     public void onBindViewHolder(@NonNull PdfViewHolder holder, int position) {
         PdfMeta pdfMeta = pdfMetas.get(position);
 
-        holder.binding.docPageCount.setText(pdfMeta.getTotalPages());
+        holder.binding.docPageCount.setText("Total pages: " + pdfMeta.getTotalPages());
         holder.binding.title.setText(pdfMeta.getTitle());
         holder.binding.date.setText(pdfMeta.getCreationDate());
         Bitmap bitmap = BitmapUtils.convertByteArrayToBitmap(pdfMeta.getBitmapBytes());

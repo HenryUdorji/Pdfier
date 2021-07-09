@@ -212,13 +212,4 @@ public class HomeActivity extends AppCompatActivity {
         }
         isClosed = true;
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (!isClosed) {
-            pdfiumCore.closeDocument(pdfDocument); // important!
-        }
-        isClosed = true;
-    }
 }
