@@ -58,6 +58,9 @@ public class HomeActivity extends AppCompatActivity {
         getPdfLauncher = registerForActivityResult(
                 new ActivityResultContracts.OpenDocument(), uri -> {
                     if (uri != null) {
+                        //Check if the picked file is actually a pdf
+                        //If it is a pdf then we extract the bitmap from it
+                        //Else show the error dialog
                         boolean isUriPdf = uri.getEncodedPath().endsWith(".pdf");
                         if (isUriPdf) {
                             binding.scrollView.setVisibility(View.VISIBLE);
@@ -75,31 +78,22 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 });
 
-        binding.pickPdfFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isClosed && pdfDocument != null && pdfiumCore != null) {
-                    pdfiumCore.closeDocument(pdfDocument); // important!
-                }
-
-                isClosed = true;
-                getPdfLauncher.launch(new String[]{"application/*"});
+        binding.pickPdfFab.setOnClickListener(v -> {
+            if (!isClosed && pdfDocument != null && pdfiumCore != null) {
+                pdfiumCore.closeDocument(pdfDocument); // important!
             }
+
+            isClosed = true;
+            getPdfLauncher.launch(new String[]{"application/*"});
         });
 
-        binding.analyzePdfBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showAnalysisDialog();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        analysisDialog.dismiss();
-                        binding.documentInfoInclude.getRoot().setVisibility(View.VISIBLE);
-                        setupPdfMetaData(pdfiumCore, pdfDocument);
-                    }
-                }, 2000);
-            }
+        binding.analyzePdfBtn.setOnClickListener(v -> {
+            showAnalysisDialog();
+            new Handler().postDelayed(() -> {
+                analysisDialog.dismiss();
+                binding.documentInfoInclude.getRoot().setVisibility(View.VISIBLE);
+                setupPdfMetaData(pdfiumCore, pdfDocument);
+            }, 2000);
         });
     }
 
@@ -153,7 +147,9 @@ public class HomeActivity extends AppCompatActivity {
             pdfBitmap = bitmap;
             binding.pdfImage.setImageBitmap(bitmap);
         } catch (IOException e) {
-            showErrorDialog(e.getMessage());
+            //If the file is a pdf but we are unable to generate
+            //a bitmap from it.It means the pdf file is corrupted
+            showErrorDialog("This PDF file is corrupted!");
             binding.scrollView.setVisibility(View.GONE);
             e.printStackTrace();
         }

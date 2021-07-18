@@ -22,7 +22,7 @@
         android:id="@+id/no_item_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="This is not a PDF!!"
+        android:text="This file is not a PDF!!"
         android:layout_below="@id/failure"
         android:textAlignment="center"
         style="@style/BodyTextStyle"
