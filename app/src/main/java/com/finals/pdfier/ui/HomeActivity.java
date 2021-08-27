@@ -1,6 +1,7 @@
 package com.finals.pdfier.ui;
 
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,9 +10,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ParcelFileDescriptor;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -29,9 +32,11 @@ import com.google.android.material.snackbar.Snackbar;
 import com.shockwave.pdfium.PdfDocument;
 import com.shockwave.pdfium.PdfiumCore;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
@@ -61,7 +66,14 @@ public class HomeActivity extends AppCompatActivity {
                         //Check if the picked file is actually a pdf
                         //If it is a pdf then we extract the bitmap from it
                         //Else show the error dialog
-                        boolean isUriPdf = uri.getEncodedPath().endsWith(".pdf");
+                        String extension  = getMimeType(uri);
+                        boolean isUriPdf;
+                        if (extension.toLowerCase(Locale.ROOT).equals("pdf")) {
+                            isUriPdf = true;
+                        }else isUriPdf = false;
+
+                        Toast.makeText(this, extension, Toast.LENGTH_LONG).show();
+
                         if (isUriPdf) {
                             binding.scrollView.setVisibility(View.VISIBLE);
                             binding.documentInfoInclude.getRoot().setVisibility(View.GONE);
@@ -160,14 +172,24 @@ public class HomeActivity extends AppCompatActivity {
 
         int pageCount = pdfiumCore.getPageCount(pdfDocument);
 
-        binding.documentInfoInclude.title.setText("Title = " + meta.getTitle());
-        binding.documentInfoInclude.author.setText("Author = " + meta.getAuthor());
-        binding.documentInfoInclude.subject.setText("Subject = " + meta.getSubject());
-        binding.documentInfoInclude.keywords.setText("Keywords = " + meta.getKeywords());
-        binding.documentInfoInclude.creator.setText("Creator = " + meta.getCreator());
-        binding.documentInfoInclude.producer.setText("Producer = " + meta.getProducer());
-        binding.documentInfoInclude.creationDate.setText("Creation Date = " + meta.getCreationDate());
-        binding.documentInfoInclude.modDate.setText("ModDate = " + meta.getModDate());
+        Log.d(TAG, "setupPdfMetaData: "+meta.getTitle());
+
+        binding.documentInfoInclude.title.setText("Title = " + (!meta.getTitle().isEmpty() ?
+                meta.getTitle() : "Not available"));
+        binding.documentInfoInclude.author.setText("Author = " + (!meta.getAuthor().isEmpty() ?
+                meta.getAuthor() : "Not available"));
+        binding.documentInfoInclude.subject.setText("Subject = " + (!meta.getSubject().isEmpty() ?
+                meta.getSubject() : "Not available"));
+        binding.documentInfoInclude.keywords.setText("Keywords = " + (!meta.getKeywords().isEmpty() ?
+                meta.getKeywords() : "Not available"));
+        binding.documentInfoInclude.creator.setText("Creator = " + (!meta.getCreator().isEmpty() ?
+                meta.getCreator() : "Not available"));
+        binding.documentInfoInclude.producer.setText("Producer = " + (!meta.getProducer().isEmpty() ?
+                meta.getProducer() : "Not available"));
+        binding.documentInfoInclude.creationDate.setText("Creation Date = " + (!meta.getCreationDate().isEmpty() ?
+                meta.getCreationDate() : "Not available"));
+        binding.documentInfoInclude.modDate.setText("ModDate = " + (!meta.getModDate().isEmpty() ?
+                meta.getTitle() : "Not available"));
         binding.documentInfoInclude.docPageCount.setText("Total Pages = " + pageCount);
 
 
@@ -192,13 +214,31 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-
     private void setupBottomNavigation() {
         BottomNavigationUtils.enableBottomNavigation(this, binding.navigation);
         Menu menu = binding.navigation.getMenu();
         MenuItem item = menu.getItem(ACTIVITY_NUM);
         item.setChecked(true);
     }
+
+    public String getMimeType(Uri uri) {
+        String extension;
+
+        //Check uri format to avoid null
+        if (uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
+            //If scheme is a content
+            final MimeTypeMap mime = MimeTypeMap.getSingleton();
+            extension = mime.getExtensionFromMimeType(this.getContentResolver().getType(uri));
+        } else {
+            //If scheme is a File
+            //This will replace white spaces with %20 and also other special characters. This will avoid returning null values on file name with spaces and special characters.
+            extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(new File(uri.getPath())).toString());
+
+        }
+
+        return extension;
+    }
+
 
     @Override
     public void onBackPressed() {
